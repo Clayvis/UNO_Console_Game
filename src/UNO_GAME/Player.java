@@ -3,51 +3,50 @@ package UNO_GAME;
 import java.util.*;
 
 public class Player {
-        private String playerName;
-        private int numOfCards;
-        List playerHand = new ArrayList();
-        private Scanner in = new Scanner(System.in);
 
+    //Fields
+    private String playerName;
+    private int numOfCards;
+    private Scanner in = new Scanner(System.in);
+    private DeckOfCards playersDeck = new DeckOfCards();
+    private List playerHand = new ArrayList();
 
-        //Constructor
+    //Constructor
 
     public Player(int numOfCards){
      getPlayerName();
+     addCardToHand(numOfCards);
     }
 
     //Business Methods
 
-    /*
     public void addCardToHand(int numOfCards){
+        //Shuffles the deck then adds cards to Player's
+        // hand according to the num of Cards passed in.
+        playersDeck.shuffle(52);
         for (int index = 0; index < numOfCards; index++ )
-        //method grabbing cards from Deck class
-        //numOfCards++;
-        playerHand.set(numOfCards - 1, x);
+            playerHand.add(playersDeck.deal());
+
     }
 
-     */
-    /*
-    public Card removeCardFromHand(int index){
-        Card toReturn = playerDeck[index];
-        for(;index<numberOfCards;index++){
-            if(index==numberOfCards-1){
-                playerDeck[index] = null;
-            }
-            else{
-                playerDeck[index] = playerDeck[index+1];
-            }
+    public void removeCardFromHand(int index){
+        if (playerHand.size() < 1){
+            playerHand.remove(index);
         }
-        numberOfCards--;
-        return toReturn;
-    }
-     */
+        else if (playerHand.size() == 1){
+            playerHand.remove(index);
+            //go to method that declares winner
+        }
+
+    };
 
     //Display Player Deck to player - call at every turn
+
     public void displayPlayerHand(){
 
         System.out.println(playerName+"'s cards:");
-        for(int i=0;i<numOfCards;i++){
-            System.out.println((i+1)+". "+ playerHand.get(i));
+        for(Object aCard : playerHand ){
+            System.out.println(aCard);
 
         }
     }
