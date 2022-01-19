@@ -6,8 +6,7 @@ public class Card
     public static final int YELLOW = 1;
 
     private static final String[] Suit = { "*", "Yellow", "Green", "Blue", "Red"};
-    private static final String[] Rank = { "0", "1", "2", "3", "4",
-            "5", "6", "7", "8", "9"};
+    private static final String[] Rank = { "0", "1", "2", "3", "4","5", "6", "7", "8", "9"};
 
     private byte cardSuit;
     private byte cardRank;
