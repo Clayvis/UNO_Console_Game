@@ -12,9 +12,7 @@ public class GameLogic {
     private boolean p2Turn;
     private boolean p1Uno;
     private boolean p2Uno;
-    //isValidMove
     private boolean validMove;
-    //checkVictory
     private boolean victory;
 
     /**
@@ -41,12 +39,6 @@ public class GameLogic {
      * All methods in this class are private except for startGame() and endGame() since there is no reason for anything outside of the class to call these private methods
      */
     public void startGame() {
-        /*System.out.println("Welcome to UNO!"); //MOVED TO MAIN
-        System.out.println("This will be a game between 2 players. "); //MOVED TO MAIN
-        System.out.println("Players will start with 7 cards. The player who has no cards in their hand first wins."); //MOVED TO MAIN
-        System.out.println("Player 1 will start first."); //MOVED TO MAIN
-        System.out.println("Are you ready to play? (Y/N)"); //MOVED TO MAIN - if Y, starting game, if N, re-loops to beginning*/
-
         System.out.println("Please enter name of player 1: ");
         String name1 = in.nextLine();
         player1.setName(name1);
@@ -103,12 +95,12 @@ public class GameLogic {
                 player2.displayPlayerHand();  //should list player's cards and give him options to select a card to play
                 currentCard = player2.playCard();  //sets currentCard to what the playCard() returns (method should return a Card object). Also once card played, card will be removed from player's hand
                 isValidMove();
-                //endTurn();
+
             }
             else if (choice.equalsIgnoreCase("B")){
                 player2.drawCards(1);
                 isValidMove();
-                //endTurn();
+
             }
             else {
                 throw new IllegalArgumentException("Invalid choice. Try again.");
@@ -126,8 +118,11 @@ public class GameLogic {
         return 0;
     }
 
+    /**
+     * checks if valid move (card played needs to be of same color/suit or both)
+     */
     private void isValidMove(){
-        //checks if valid move (card played needs to be of same color/suit or both)
+
         if ((currentCard.suit() == prevCard.suit()) || (currentCard.rank() == prevCard.rank())) {
             prevCard = currentCard; //sets previous card to current card played if move is valid
             checkSpecial();
@@ -142,13 +137,8 @@ public class GameLogic {
     }
 
     /**
-     * Not needed for now
+     * ends turn of current player and switches turn to next player
      */
-    /*public void switchTurn(){
-        //switches turn between the two players
-    }*/
-
-    //ends turn of current player and switches turn to next player
     private void endTurn(){
 
         if (p1Turn == true) {
@@ -165,7 +155,7 @@ public class GameLogic {
     /**
      * This method checks if a Draw +2, WILD Draw +4, WILD, Reverse, or Skip card is played
      */
-    private void checkSpecial(){
+    private void checkSpecial() {
         while(p1Turn == true) {
             if (currentCard.rank() == Draw + 2) {
                 player2.drawCards(2);
@@ -174,8 +164,9 @@ public class GameLogic {
             } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
                 checkVictory();
                 startTurn();
-            }  else if (currentCard.rank() == Wild) {
-                checkVictory();
+            } else if (currentCard.rank() == Wild) {
+                //checkVictory();
+                break;
             }
         }
 
@@ -187,22 +178,26 @@ public class GameLogic {
             } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
                 checkVictory();
                 startTurn();
-            }  else if (currentCard.rank() == Wild) {
-                checkVictory();
+            } else if (currentCard.rank() == Wild) {
+                //checkVictory();
+                break;
             }
         }
 
     }
 
+    /**
+     * Checks whether player still has Cards in Hand
+     * Also checks if player has 1 card left, then gives them the option to say UNO
+     */
     private void checkVictory(){
-        //checks whether player still has Cards in Hand
-        //also checks at the beginning if player has 1 card left, then give them the option to say UNO
+
         if (player1.getNumOfCards() == 0 || player2.getNumOfCards() == 0) {
             System.out.println("Congratulations, you win! This is the end of the game. ");
             endGame();
         }
 
-        while(p1Uno == false) {
+        while(p1Turn == true && p1Uno == false) {
             if (player1.getNumOfCards() == 1) {
                 System.out.println("Type the magic word. ");
                 String uno = in.nextLine();
@@ -215,7 +210,7 @@ public class GameLogic {
                 }
             }
         }
-        while(p2Uno == false) {
+        while(p2Turn == true && p2Uno == false) {
             if (player2.getNumOfCards() == 1) {
                 System.out.println("Type the magic word. ");
                 String uno = in.nextLine();
@@ -235,8 +230,7 @@ public class GameLogic {
 
     public void endGame(){
         //returns back to Main which will end the program
+        break;
     }
-
-
 
 }
