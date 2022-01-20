@@ -1,3 +1,5 @@
+import UNO_GAME.DeckOfCards;
+
 public class TestDeck
 {
     public static void main(String[] args)
@@ -11,7 +13,7 @@ public class TestDeck
         a.shuffle(1000);
         System.out.println(a);
 
-//        Card b;
+//        UNO_GAME.Card b;
 //
 //        b = a.deal();
 //        System.out.println("Deal a card: " + b);

@@ -1,3 +1,5 @@
+import UNO_GAME.Card;
+
 public class TestCard
 {
     public static void main(String[] args)

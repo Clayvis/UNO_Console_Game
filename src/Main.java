@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
-        GameLogic game = new GameLogic();
+        UNO_GAME.GameLogic game = new UNO_GAME.GameLogic();
         while(true) {
             System.out.println("Welcome to UNO!"); //move to main
             System.out.println("This will be a game between 2 players. "); //main
