@@ -10,7 +10,7 @@ public class TestDeck
         System.out.println(a);
 
         System.out.println("Shuffle cards....");
-        a.shuffle(1000);
+       //a.shuffle(1000);
         System.out.println(a);
 
 //        UNO_GAME.Card b;

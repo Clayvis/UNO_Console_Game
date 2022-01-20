@@ -3,78 +3,56 @@ package UNO_GAME;
    Deck: a deck of cards
    ----------------------------------------------------- */
 
+import java.util.*;
+
 public class DeckOfCards
 {
-    public static final int NCARDS = 40;
 
-    private Card[] deckOfCards;         // Contains all 40 cards
-    private int currentCard;            // deal THIS card in deck
+    List<Card> deckOfCards = new ArrayList<>(52); // Contains all 52 cards
 
     public DeckOfCards( )
     {
-        deckOfCards = new Card[ NCARDS ];
-
-        int i = 0;
-
         for (int suit = Card.YELLOW; suit <= Card.RED; suit++ )
-            for ( int rank = 0; rank <= 9; rank++ )
-                deckOfCards[i++] = new Card(suit, rank);
+            for ( int rank = 0; rank <= 12; rank++ )
+                deckOfCards.add(new Card(suit, rank));
 
-        currentCard = 0;
-    }
 
-    /* ---------------------------------
-       shuffle(n): shuffle the deck
-       --------------------------------- */
-    public void shuffle(int n)
-    {
-        int i, j, k;
-
-        for ( k = 0; k < n; k++ )
-        {
-            i = (int) ( NCARDS * Math.random() );  // Pick 2 random cards
-            j = (int) ( NCARDS * Math.random() );  // in the deck
-
-	  /* ---------------------------------
-	     swap these randomly picked cards
-	     --------------------------------- */
-            Card tmp = deckOfCards[i];
-            deckOfCards[i] = deckOfCards[j];
-            deckOfCards[j] = tmp;
-        }
-
-        currentCard = 0;   // Reset current card to deal
     }
 
     /* -------------------------------------------
        deal(): deal deckOfCards[currentCard] out
        ------------------------------------------- */
+
     public Card deal()
     {
-        if ( currentCard < NCARDS )
-        {
-            return ( deckOfCards[ currentCard++ ] );
+
+        while (deckOfCards.size() > 0){
+            Random cardGenerator = new Random();
+            Card[] test = deckOfCards.toArray(new Card[0]);
+            Card aCard = test[cardGenerator.nextInt(test.length)];
+            deckOfCards.remove(aCard);
+            return aCard;
         }
-        else
-        {
-            System.out.println("Out of cards error");
-            return ( null );  // Error;
-        }
+
+        System.out.println("Out of Cards....");
+        return null;
     }
 
-    public String toString()
-    {
-        String s = "";
-        int k;
-
-        k = 0;
-        for ( int i = 0; i < 4; i++ )
-        {
-            for ( int j = 0; j <= 9; j++ )
-                s += (deckOfCards[k++] + " ");
-
-            s += "\n";
-        }
-        return ( s );
+    @Override
+    public String toString() {
+        return "DeckOfCards{" +
+                "deckOfCards=" + deckOfCards +
+                '}';
     }
+
+    public static void main(String[] args) {
+        DeckOfCards testDeck = new DeckOfCards();
+        System.out.println(testDeck);
+        for(int i = 0; i < 54; i++){
+            testDeck.deal();
+        }
+        System.out.println(testDeck);
+    }
+
+
 }
