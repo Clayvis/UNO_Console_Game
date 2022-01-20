@@ -19,6 +19,9 @@ public class Main {
             else if (line.equalsIgnoreCase("N")) {
                 break;
             }
+            else {
+                System.out.println("Invalid input. ");
+            }
         }
     }
 }
