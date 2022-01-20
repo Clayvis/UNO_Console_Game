@@ -3,13 +3,15 @@ package UNO_GAME;
 //Do you see this?
 public class Card
 {
+    public static final int WILD   = 5;
     public static final int RED   = 4;
     public static final int BLUE   = 3;
     public static final int GREEN    = 2;
     public static final int YELLOW = 1;
 
-    private static final String[] Suit = { "*", "Yellow", "Green", "Blue", "Red"};
-    private static final String[] Rank = { "0", "1", "2", "3", "4","5", "6", "7", "8", "9"};
+    private static final String[] Suit = { "*", "Yellow", "Green", "Blue", "Red", "Wild"};
+    private static final String[] Rank = { "0", "1", "2", "3", "4","5", "6", "7", "8", "9", "DrawTwo","Reverse", "Skip"};
+
 
     private int cardSuit;
     private int cardRank;

@@ -9,7 +9,7 @@ public class Main {
         while(true) {
             System.out.println("Welcome to UNO!"); //move to main
             System.out.println("This will be a game between 2 players. "); //main
-            System.out.println("Players will start with 7 cards. The player who has no cards in their hand first wins."); //main
+            System.out.println("The player who has no cards in their hand first wins."); //main
             System.out.println("Player 1 will start first."); //main
             System.out.println("Are you ready to play? (Y/N)"); //main - if Y, starting game, if N, re-loops to beginning
             String line = in.nextLine();
@@ -18,6 +18,9 @@ public class Main {
             }
             else if (line.equalsIgnoreCase("N")) {
                 break;
+            }
+            else{
+                System.out.println("Invalid Input!!");
             }
         }
     }

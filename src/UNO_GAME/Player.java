@@ -24,7 +24,7 @@ public class Player {
     public void addCardToHand(int numOfCards){
         //Shuffles the deck then adds cards to Player's
         // hand according to the num of Cards passed in.
-        playersDeck.shuffle(52);
+        //playersDeck.shuffle(52);
         for (int index = 0; index < numOfCards; index++ )
             playerHand.add(playersDeck.deal());
 
