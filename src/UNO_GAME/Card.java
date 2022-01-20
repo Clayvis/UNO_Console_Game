@@ -1,3 +1,5 @@
+package UNO_GAME;
+
 //Do you see this?
 public class Card
 {
@@ -9,13 +11,13 @@ public class Card
     private static final String[] Suit = { "*", "Yellow", "Green", "Blue", "Red"};
     private static final String[] Rank = { "0", "1", "2", "3", "4","5", "6", "7", "8", "9"};
 
-    private byte cardSuit;
-    private byte cardRank;
+    private int cardSuit;
+    private int cardRank;
 
     public Card( int suit, int rank )
     {
-        cardRank = (byte) rank;
-        cardSuit = (byte) suit;
+        cardRank = rank;
+        cardSuit = suit;
     }
 
     public int suit()
@@ -44,5 +46,23 @@ public class Card
     public String toString()
     {
         return (  Suit[ cardSuit ] + Rank[ cardRank ]);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        if (cardSuit != card.cardSuit) return false;
+        return cardRank == card.cardRank;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = cardSuit;
+        result = 31 * result + cardRank;
+        return result;
     }
 }
