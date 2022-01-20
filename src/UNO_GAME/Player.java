@@ -9,7 +9,8 @@ public class Player {
     private int numOfCards;
     private Scanner in = new Scanner(System.in);
     private DeckOfCards playersDeck = new DeckOfCards();
-    private List playerHand = new ArrayList();
+    List<Card> playerHand = new ArrayList();
+    Card playerCard = new Card(0,0);
 
     //Constructor
 
@@ -29,9 +30,16 @@ public class Player {
 
     }
 
+    public Card playCard (int playerChoice){
+        playerCard = playerHand.get(playerChoice);
+        //removeCardFromHand(playerChoice);
+      return playerCard;
+    };
     public void removeCardFromHand(int index){
-        if (playerHand.size() < 1){
+       // int newIndex = index - ;
+        if (playerHand.size() > 1){
             playerHand.remove(index);
+            System.out.println("Active card is now = "+ playerCard);
         }
         else if (playerHand.size() == 1){
             playerHand.remove(index);
@@ -45,19 +53,18 @@ public class Player {
     public void displayPlayerHand(){
 
         System.out.println(playerName+"'s cards:");
+        int i = 0;
         for(Object aCard : playerHand ){
-            System.out.println(aCard);
+
+            System.out.println(i + ") " + aCard);
+            i++;
 
         }
     }
 
  // Accessors and Mutators
-    public void getPlayerName() {
-        System.out.print("Enter name of player? ");
-        playerName = in.next();
-        System.out.println();
-        setPlayerName(playerName);
-
+    public String getPlayerName() {
+        return playerName;
     }
 
     public void setPlayerName(String playerName) {

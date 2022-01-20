@@ -1,3 +1,6 @@
+package UNO_GAME;
+
+import UNO_GAME.DeckOfCards;
 import UNO_GAME.Player;
 
 import java.util.Scanner;
@@ -8,8 +11,8 @@ public class GameLogic {
     private Player player1;
     private Player player2;
     private DeckOfCards deck;
-    private Card currentCard;
-    private Card prevCard;
+    private UNO_GAME.Card currentCard;
+    private UNO_GAME.Card prevCard;
     private boolean p1Turn;
     private boolean p2Turn;
     private boolean p1Uno;
@@ -23,8 +26,8 @@ public class GameLogic {
      */
     public GameLogic() {
 
-        player1 = new Player(7);
-        player2 = new Player(7);
+        player1 = new Player(2);
+        player2 = new Player(2);
         deck = new DeckOfCards();
         currentCard = null;
         prevCard = null;
@@ -32,6 +35,7 @@ public class GameLogic {
         p2Turn = false;
         p1Uno = false;
         p2Uno = false;
+        DeckOfCards deck = new DeckOfCards();
     }
 
     /**
@@ -39,19 +43,18 @@ public class GameLogic {
      * All methods in this class are private except for startGame() and endGame() since there is no reason for anything outside the class to call these private methods
      */
     public void startGame() {
-        /*System.out.println("Please enter name of player 1: ");
+        System.out.println("Please enter name of player 1: ");
         String name1 = in.nextLine();
-        player1.setName(name1);
+        player1.setPlayerName(name1);
         System.out.println("Please enter name of player 2: ");
         String name2 = in.nextLine();
-        player2.setName(name2);*/
+        player2.setPlayerName(name2);
 
         System.out.println("Starting Game. Good luck, and have fun! ");
-        player1.addCardToHand(7);   //<---this method should actually be in the Player or Deck class
-        player2.addCardToHand(7);
         p1Turn = true;
-        deck.shuffle();
-        prevCard = deck.getCard(); //<---need a way to flip the first card from the deck to start the game
+        deck.shuffle(52);
+        prevCard = deck.deal(); //<---need a way to flip the first card from the deck to start the game
+        System.out.println(prevCard);
         startTurn();
 
     }
@@ -64,58 +67,68 @@ public class GameLogic {
     private void startTurn() throws IllegalArgumentException {
         //determines and starts turn for either player
         while (p1Turn == true) {
-            if(player1.getNumOfCards() > 1) {
+            if (player1.playerHand.size() > 1) {
                 p1Uno = false;  //resets Uno to false if player has more than 1 card
             }
             System.out.println("***********************************************");
-            System.out.println("It is " + player1.getName() + " turn. These are your options (press A or B): ");
+            player1.displayPlayerHand();
+            System.out.println("It is " + player1.getPlayerName() + " turn. These are your options (press A or B): ");
             System.out.println("A.) Play a card from your hand ");
-            System.out.println("B.) Draw a card from the pile ");
+            System.out.println("B.) Draw a card from the deck ");
             String choice = in.nextLine();
-            if (choice.equalsIgnoreCase("A")){
-                player1.displayPlayerHand();  //should list player's cards and give him options to select a card to play
-                currentCard = player1.playCard();  //sets currentCard to what the playCard() returns (method should return a Card object). Also once card played, card will be removed from player's hand
-                isValidMove();
 
-            }
-            else if (choice.equalsIgnoreCase("B")){
+            if (choice.equalsIgnoreCase("A")) {
+                player1.displayPlayerHand();
+                String choice2 = in.nextLine();
+                currentCard = player1.playCard(Integer.parseInt(choice2));  //sets currentCard to what the playCard() returns (method should return a UNO_GAME.Card object). Also once card played, card will be removed from player's hand
+                isValidMove();
+                player1.removeCardFromHand(Integer.parseInt(choice2));
+                endTurn();
+
+
+            } else if (choice.equalsIgnoreCase("B")) {
                 player1.addCardToHand(1);
-                isValidMove();
+                endTurn();
 
+            } else {
+                System.out.println("Invalid choice. Try again.");
+                startTurn();
             }
-            else {
-                throw new IllegalArgumentException("Invalid choice. Try again.");
-            }
+
         }
         while (p2Turn == true) {
-            if(player2.getNumOfCards() > 1) {
+            if (player2.playerHand.size() > 1) {
                 p2Uno = false;   //resets Uno to false if player has more than 1 card
             }
             System.out.println("***********************************************");
-            System.out.println("It is " + player2.getName() + " turn. These are your options (press A or B): ");
+            player2.displayPlayerHand();
+            System.out.println("It is " + player2.getPlayerName() + " turn. These are your options (press A or B): ");
             System.out.println("A.) Play a card from your hand ");
             System.out.println("B.) Draw a card from the pile ");
             String choice = in.nextLine();
-            if (choice.equalsIgnoreCase("A")){
-                player2.displayPlayerHand();  //should list player's cards and give him options to select a card to play
-                currentCard = player2.playCard();  //sets currentCard to what the playCard() returns (method should return a Card object). Also once card played, card will be removed from player's hand
-                isValidMove();
 
-            }
-            else if (choice.equalsIgnoreCase("B")){
+            if (choice.equalsIgnoreCase("A")) {
+                player2.displayPlayerHand();//should list player's cards and give him options to select a card to play
+                String choice2 = in.nextLine();
+                currentCard = player2.playCard(Integer.parseInt(choice2));  //sets currentCard to what the playCard() returns (method should return a UNO_GAME.Card object). Also once card played, card will be removed from player's hand
+                isValidMove();
+                player2.removeCardFromHand(Integer.parseInt(choice2));
+
+            } else if (choice.equalsIgnoreCase("B")) {
                 player2.addCardToHand(1);
-                isValidMove();
+                endTurn();
 
+            } else {
+                System.out.println("Invalid choice. Try again.");
+                startTurn();
             }
-            else {
-                throw new IllegalArgumentException("Invalid choice. Try again.");
-            }
+
         }
 
     }
 
     /**
-     * Need to move this method to the Player or DeckOfCards class
+     * Need to move this method to the Player or UNO_GAME.DeckOfCards class
      */
     private int drawCards(int num){
         //called if player needs to draw a card (amount determined whether due to starting game(7)/not playing a card(1)/receiving +2/receiving +4)
@@ -128,11 +141,22 @@ public class GameLogic {
      */
     private void isValidMove(){
 
-        if ((currentCard.suit() == prevCard.suit()) || (currentCard.rank() == prevCard.rank())) {
+        int currentCardSuit = currentCard.suit();
+        int prevCardSuit = prevCard.suit();
+        int currentCardRank = currentCard.rank();
+        int prevCardRank = prevCard.rank();
+
+        if (currentCardSuit==prevCardSuit){
             prevCard = currentCard; //sets previous card to current card played if move is valid
-            checkSpecial();
+            //checkSpecial();
             checkVictory();
-            endTurn();
+//            endTurn();
+        }
+        else if(currentCardRank == prevCardRank){
+            prevCard = currentCard; //sets previous card to current card played if move is valid
+            //checkSpecial();
+            checkVictory();
+//            endTurn();
         }
         else {
             System.out.println("Invalid move. Please try again. ");
@@ -160,36 +184,36 @@ public class GameLogic {
     /**
      * This method checks if a Draw +2, WILD Draw +4, WILD, Reverse, or Skip card is played
      */
-    private void checkSpecial() {
-        while(p1Turn == true) {
-            if (currentCard.rank() == Draw + 2) {
-                player2.addCardToHand(2);
-            } else if (currentCard.rank() == Wild Draw + 4) {
-                player2.addCardToHand(4);
-            } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
-                checkVictory();
-                startTurn();
-            } else if (currentCard.rank() == Wild) {
-                //checkVictory();
-                break;
-            }
-        }
-
-        while (p2Turn == true) {
-            if (currentCard.rank() == Draw + 2) {
-                player2.addCardToHand(2);
-            } else if (currentCard.rank() == Wild Draw + 4) {
-                player2.addCardToHand(4);
-            } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
-                checkVictory();
-                startTurn();
-            } else if (currentCard.rank() == Wild) {
-                //checkVictory();
-                break;
-            }
-        }
-
-    }
+//    private void checkSpecial() {
+//        while(p1Turn == true) {
+//            if (currentCard.rank() == Draw + 2) {
+//                player2.addCardToHand(2);
+//            } else if (currentCard.rank() == Wild Draw + 4) {
+//                player2.addCardToHand(4);
+//            } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
+//                checkVictory();
+//                startTurn();
+//            } else if (currentCard.rank() == Wild) {
+//                //checkVictory();
+//                break;
+//            }
+//        }
+//
+//        while (p2Turn == true) {
+//            if (currentCard.rank() == Draw + 2) {
+//                player2.addCardToHand(2);
+//            } else if (currentCard.rank() == Wild Draw + 4) {
+//                player2.addCardToHand(4);
+//            } else if (currentCard.rank() == Reverse || currentCard.rank() == Skip) {
+//                checkVictory();
+//                startTurn();
+//            } else if (currentCard.rank() == Wild) {
+//                //checkVictory();
+//                break;
+//            }
+//        }
+//
+//    }
 
     /**
      * Checks whether player still has Cards in Hand
@@ -197,13 +221,13 @@ public class GameLogic {
      */
     private void checkVictory(){
 
-        if (player1.getNumOfCards() == 0 || player2.getNumOfCards() == 0) {
+        if (player1.playerHand.size() == 0 || player2.playerHand.size() == 0) {
             System.out.println("Congratulations, you win! This is the end of the game. ");
             endGame();
         }
 
-        while(p1Turn == true && p1Uno == false) {
-            if (player1.getNumOfCards() == 1) {
+        while(p1Uno == false) {
+            if (player1.playerHand.size() == 1) {
                 System.out.println("Type the magic word. ");
                 String uno = in.nextLine();
                 if (uno.equalsIgnoreCase("UNO")) {
@@ -214,9 +238,12 @@ public class GameLogic {
                     player1.addCardToHand(2);
                 }
             }
+            else{
+                break;
+            }
         }
-        while(p2Turn == true && p2Uno == false) {
-            if (player2.getNumOfCards() == 1) {
+        while(p2Uno == false) {
+            if (player2.playerHand.size() == 1) {
                 System.out.println("Type the magic word. ");
                 String uno = in.nextLine();
                 if (uno.equalsIgnoreCase("UNO")) {
@@ -227,6 +254,9 @@ public class GameLogic {
                     player2.addCardToHand(2);
                 }
             }
+            else {
+                break;
+            }
         }
 
     }
@@ -234,6 +264,5 @@ public class GameLogic {
 
     public void endGame(){
         //returns back to Main which will end the program
-        break;
     }
 }

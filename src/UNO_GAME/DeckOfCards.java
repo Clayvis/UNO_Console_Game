@@ -1,4 +1,4 @@
-
+package UNO_GAME;
 /* -----------------------------------------------------
    Deck: a deck of cards
    ----------------------------------------------------- */
@@ -16,7 +16,7 @@ public class DeckOfCards
 
         int i = 0;
 
-        for ( int suit = Card.YELLOW; suit <= Card.RED; suit++ )
+        for (int suit = Card.YELLOW; suit <= Card.RED; suit++ )
             for ( int rank = 0; rank <= 9; rank++ )
                 deckOfCards[i++] = new Card(suit, rank);
 
