@@ -13,7 +13,7 @@ public class DeckOfCards
     public DeckOfCards( )
     {
         for (int suit = Card.YELLOW; suit <= Card.RED; suit++ )
-            for ( int rank = 0; rank <= 12; rank++ )
+            for ( int rank = 0; rank <= 14; rank++ )
                 deckOfCards.add(new Card(suit, rank));
 
 
