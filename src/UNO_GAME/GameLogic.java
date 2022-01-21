@@ -318,19 +318,19 @@ public class GameLogic {
         String colorChoice = in.nextLine();
 
         if (colorChoice.equalsIgnoreCase("RED")) {
-            prevCard = new Card(4, 15);
-            colorFlag = true;
-
-        } else if (colorChoice.equalsIgnoreCase("BLUE")) {
             prevCard = new Card(3, 15);
             colorFlag = true;
 
-        } else if (colorChoice.equalsIgnoreCase("GREEN")) {
+        } else if (colorChoice.equalsIgnoreCase("BLUE")) {
             prevCard = new Card(2, 15);
             colorFlag = true;
 
-        } else if (colorChoice.equalsIgnoreCase("YELLOW")) {
+        } else if (colorChoice.equalsIgnoreCase("GREEN")) {
             prevCard = new Card(1, 15);
+            colorFlag = true;
+
+        } else if (colorChoice.equalsIgnoreCase("YELLOW")) {
+            prevCard = new Card(0, 15);
             colorFlag = true;
 
         } else {
