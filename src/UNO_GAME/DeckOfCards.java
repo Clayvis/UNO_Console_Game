@@ -1,31 +1,20 @@
 package UNO_GAME;
-/* -----------------------------------------------------
-   Deck: a deck of cards
-   ----------------------------------------------------- */
 
 import java.util.*;
 
 public class DeckOfCards
 {
-
-    List<Card> deckOfCards = new ArrayList<>(52); // Contains all 52 cards
+    List<Card> deckOfCards = new ArrayList<>(52);
 
     public DeckOfCards( )
     {
         for (int suit = Card.YELLOW; suit <= Card.RED; suit++ )
-            for ( int rank = 0; rank <= 12; rank++ )
+            for ( int rank = 0; rank <= 14; rank++ )
                 deckOfCards.add(new Card(suit, rank));
-
-
     }
-
-    /* -------------------------------------------
-       deal(): deal deckOfCards[currentCard] out
-       ------------------------------------------- */
 
     public Card deal()
     {
-
         while (deckOfCards.size() > 0){
             Random cardGenerator = new Random();
             Card[] test = deckOfCards.toArray(new Card[0]);
@@ -44,15 +33,5 @@ public class DeckOfCards
                 "deckOfCards=" + deckOfCards +
                 '}';
     }
-
-    public static void main(String[] args) {
-        DeckOfCards testDeck = new DeckOfCards();
-        System.out.println(testDeck);
-        for(int i = 0; i < 54; i++){
-            testDeck.deal();
-        }
-        System.out.println(testDeck);
-    }
-
 
 }
