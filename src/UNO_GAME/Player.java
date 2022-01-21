@@ -27,13 +27,15 @@ public class Player {
     public void addCardToHand(int numOfCards){
         //Shuffles the deck then adds cards to Player's
         // hand according to the num of Cards passed in.
-        for (int index = 0; index < numOfCards; index++ )
-            /*playerCard = playersDeck.deal();
-            if (playerCard.equals(null)) {
-                System.out.println("Deck is out of cards. ");
+        for (int index = 0; index < numOfCards; index++ ) {
+            playerCard = playersDeck.deal();
+            if (playerCard == null) {
+                System.out.println("Deck is out of cards. You have skipped your turn. ");
             }
-            playerHand.add(playerCard);*/
-            playerHand.add(playersDeck.deal());
+            else{
+                playerHand.add(playerCard);
+            }
+        }
 
 
     }
