@@ -3,7 +3,7 @@ package UNO_GAME;
 //Do you see this?
 public class Card
 {
-    //public static final int WILD   = 5;
+
     public static final int RED   = 4;
     public static final int BLUE   = 3;
     public static final int GREEN    = 2;
