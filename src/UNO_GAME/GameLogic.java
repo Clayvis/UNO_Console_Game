@@ -27,8 +27,8 @@ public class GameLogic {
     public GameLogic() {
 
         deck = new DeckOfCards();
-        player1 = new Player(3, deck);
-        player2 = new Player(3, deck);
+        player1 = new Player(7, deck);
+        player2 = new Player(7, deck);
         currentCard = null;
         prevCard = null;
         p1Turn = false;
@@ -89,7 +89,6 @@ public class GameLogic {
                         checkUno();
                         checkVictory();
                     }
-
                     endTurn();
                 } catch (NumberFormatException e) {
                     System.out.println("Incorrect input. Please enter the correct number for the card you wish to play");
@@ -101,10 +100,8 @@ public class GameLogic {
             } else if (choice.equalsIgnoreCase("B")) {
                 player1.addCardToHand(1);
                 endTurn();
-
             } else {
                 System.out.println("Invalid choice. Try again.");
-
             }
 
         }
@@ -130,7 +127,6 @@ public class GameLogic {
                         checkUno();
                         checkVictory();
                     }
-
                     endTurn();
                 } catch (NumberFormatException e) {
                     System.out.println("Incorrect input. Please enter the correct number for the card you wish to play.");
@@ -142,10 +138,8 @@ public class GameLogic {
             } else if (choice.equalsIgnoreCase("B")) {
                 player2.addCardToHand(1);
                 endTurn();
-
             } else {
                 System.out.println("Invalid choice. Try again.");
-
             }
         }
     }
@@ -160,9 +154,12 @@ public class GameLogic {
         int currentCardRank = currentCard.rank();
         int prevCardRank = prevCard.rank();
 
-        if (currentCardSuit == prevCardSuit){
-            prevCard = currentCard; //sets previous card to current card played if move is valid
-            checkSpecial(choice);
+        if (prevCardRank == 13 || prevCardRank == 14) {
+            prevCard = currentCard;
+            validMove = true;
+        }
+        else if (currentCardRank == 13 || currentCardRank == 14) {
+            checkWild(choice);
             validMove = true;
         }
         else if(currentCardRank == prevCardRank){
@@ -170,12 +167,9 @@ public class GameLogic {
             checkSpecial(choice);
             validMove = true;
         }
-        else if (currentCardRank == 13 || currentCardRank == 14) {
-            checkWild(choice);
-            validMove = true;
-        }
-        else if (prevCardRank == 13 || prevCardRank == 14) {
-            prevCard = currentCard;
+        else if (currentCardSuit == prevCardSuit){
+            prevCard = currentCard; //sets previous card to current card played if move is valid
+            checkSpecial(choice);
             validMove = true;
         }
         else {
