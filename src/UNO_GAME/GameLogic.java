@@ -149,25 +149,20 @@ public class GameLogic {
      */
     private boolean isValidMove(String choice){
 
-        int currentCardSuit = currentCard.suit();
-        int prevCardSuit = prevCard.suit();
-        int currentCardRank = currentCard.rank();
-        int prevCardRank = prevCard.rank();
-
-        if (prevCardRank == 13 || prevCardRank == 14) {
+        if (prevCard.rank() == 13 || prevCard.rank() == 14) {
             prevCard = currentCard;
             validMove = true;
         }
-        else if (currentCardRank == 13 || currentCardRank == 14) {
+        else if (currentCard.rank() == 13 || currentCard.rank() == 14) {
             checkWild(choice);
             validMove = true;
         }
-        else if(currentCardRank == prevCardRank){
+        else if(currentCard.rank() == prevCard.rank()){
             prevCard = currentCard; //sets previous card to current card played if move is valid
             checkSpecial(choice);
             validMove = true;
         }
-        else if (currentCardSuit == prevCardSuit){
+        else if (currentCard.suit() == prevCard.suit()){
             prevCard = currentCard; //sets previous card to current card played if move is valid
             checkSpecial(choice);
             validMove = true;
